@@ -104,7 +104,7 @@
     #resultImage {
       display: none;
       max-width: 100%;
-      max-height: 300 px;
+      max-height: 300px;
       width: auto;
       height: auto;
       margin-top: 20px;
@@ -142,7 +142,7 @@
       Der letzte Schritt findet den Umfang.
     </div>
 
-    <img id="resultImage" src="Fundort.jpg" alt="Wo bin ich?">
+    <img id="resultImage" src="Fundort.jpg" alt="Fundort">
     <div id="resultText">Wo bin ich?</div>
       
     <div id="message"></div>
@@ -156,10 +156,11 @@
     const forgotLink = document.getElementById("forgotLink");
     const hintText = document.getElementById("hintText");
     const resultImage = document.getElementById("resultImage");
+    const resultText = document.getElementById("resultText");
 
     inputs.forEach((input, index) => {
       input.addEventListener("input", () => {
-        input.value = input.value.replace(/D/g, "").slice(0, 1);
+        input.value = input.value.replace(/\D/g, "").slice(0, 1);
         if (input.value && index < inputs.length - 1) {
           inputs[index + 1].focus();
         }
@@ -173,7 +174,7 @@
 
       input.addEventListener("paste", (e) => {
         e.preventDefault();
-        const paste = (e.clipboardData || window.clipboardData).getData("text").replace(/D/g, "").slice(0, 4);
+        const paste = (e.clipboardData || window.clipboardData).getData("text").replace(/\D/g, "").slice(0, 4);
         paste.split("").forEach((digit, i) => {
           if (inputs[i]) inputs[i].value = digit;
         });
