@@ -173,9 +173,13 @@
 
     checkBtn.addEventListener("click", () => {
       const enteredCode = [...inputs].map(input => input.value).join("");
+
+      message.textContent = "";
+      resultImage.style.display = "none";
+      
       if (enteredCode === correctCode) {
         message.style.color = "green";
-     //   message.textContent = "Richtig. Der nächste Hinweis wartet.";
+        message.textContent = "Richtig. Der nächste Hinweis wartet.";
         resultImage.style.display = "block";
       } else {
         message.style.color = "crimson";
