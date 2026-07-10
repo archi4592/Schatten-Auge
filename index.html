@@ -11,7 +11,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: crimson;
+      background: white;
       font-family: Georgia, serif;
       color: #222;
     }
@@ -191,6 +191,9 @@
       resultText.style.display = "none";
       
       if (enteredCode === correctCode) {
+        document.querySelector(".code-inputs").style.display = "none";
+        document.querySelector(".actions").style.display = "none";
+        message.textContent = "";
         resultImage.style.display = "block";
         resultText.style.display = "block";
       } else {
