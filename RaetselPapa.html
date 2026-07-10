@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hinweis</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f1e8;
+      font-family: Georgia, serif;
+      color: #222;
+    }
+
+    .card {
+      width: min(90vw, 520px);
+      padding: 32px;
+      background: #fffaf2;
+      border: 1px solid #d8cbb8;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .logo {
+      display: block;
+      max-width: 180px;
+      width: 100%;
+      height: auto;
+      margin: 0 auto 24px auto;
+    }
+
+    .code-inputs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .code-inputs input {
+      width: 56px;
+      height: 64px;
+      font-size: 1.6rem;
+      text-align: center;
+      border: 1px solid #b8ab97;
+      border-radius: 10px;
+      background: #fff;
+      box-sizing: border-box;
+    }
+
+    .code-inputs input:focus {
+      outline: none;
+      border-color: #5c4b3a;
+      box-shadow: 0 0 0 3px rgba(92, 75, 58, 0.12);
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    button {
+      padding: 12px 18px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #3b3b3b;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #222;
+    }
+
+    .forgot {
+      font-size: 0.85rem;
+      color: #6b5a47;
+      text-decoration: underline;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .hint {
+      display: none;
+      margin-top: 22px;
+      font-size: 1.15rem;
+      line-height: 1.8;
+    }
+
+    #message {
+      margin-top: 16px;
+      min-height: 1.5em;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="Logo_20260710_070918_0000.jpeg" alt="Logo" class="logo">
+
+    <div class="code-inputs">
+      <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="Erste Ziffer">
+      <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="Zweite Ziffer">
+      <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="Dritte Ziffer">
+      <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="Vierte Ziffer">
+    </div>
+
+    <div class="actions">
+      <button id="checkBtn">Log in</button>
+      <div class="forgot" id="forgotLink">Passwort vergessen</div>
+    </div>
+
+    <div class="hint" id="hintText">
+      Am Anfang des Wortes wartet die Zahl.<br>
+      Die zweite Zahl verbirgt sich im Herzen des Wortes.<br>
+      Der letzte Schritt findet den Umfang.
+    </div>
+
+    <div id="message"></div>
+  </div>
+
+  <script>
+    const correctCode = "1406";
+    const inputs = document.querySelectorAll(".code-inputs input");
+    const message = document.getElementById("message");
+    const checkBtn = document.getElementById("checkBtn");
+    const forgotLink = document.getElementById("forgotLink");
+    const hintText = document.getElementById("hintText");
+
+    inputs.forEach((input, index) => {
+      input.addEventListener("input", () => {
+        input.value = input.value.replace(/D/g, "").slice(0, 1);
+        if (input.value && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !input.value && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+
+      input.addEventListener("paste", (e) => {
+        e.preventDefault();
+        const paste = (e.clipboardData || window.clipboardData).getData("text").replace(/D/g, "").slice(0, 4);
+        paste.split("").forEach((digit, i) => {
+          if (inputs[i]) inputs[i].value = digit;
+        });
+        const nextIndex = Math.min(paste.length, inputs.length - 1);
+        inputs[nextIndex]?.focus();
+      });
+    });
+
+    checkBtn.addEventListener("click", () => {
+      const enteredCode = [...inputs].map(input => input.value).join("");
+      if (enteredCode === correctCode) {
+        message.style.color = "green";
+        message.textContent = "Richtig. Der nächste Hinweis wartet."
+      } else {
+        message.style.color = "crimson";
+        message.textContent = "Falscher Code.";
+      }
+    });
+
+    forgotLink.addEventListener("click", () => {
+      hintText.style.display = "block";
+      forgotLink.style.display = "none";
+    });
+  </script>
+</body>
+</html>
