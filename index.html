@@ -110,6 +110,14 @@
       margin-top: 20px;
       border-radius: 10px;
     }
+
+    #resultText{
+      display: none;
+      margin-top: 12px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -135,6 +143,7 @@
     </div>
 
     <img id="resultImage" src="Fundort.jpg" alt="Wo bin ich?">
+    <div id="resultText">Wo bin ich?</div>
       
     <div id="message"></div>
   </div>
@@ -181,11 +190,14 @@
       
       if (enteredCode === correctCode) {
         message.style.color = "green";
-        message.textContent = "Richtig. Der nächste Hinweis wartet.";
+       // message.textContent = "Richtig. Der nächste Hinweis wartet.";
         resultImage.style.display = "block";
+        resultText.style.display = "block";
       } else {
         message.style.color = "crimson";
         message.textContent = "Falscher Code.";
+        inputs.forEach(input => input.value = "";
+        inputz[0]. focus();
       }
     });
 
