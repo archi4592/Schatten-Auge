@@ -11,7 +11,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: white;
+      background: crimson;
       font-family: Georgia, serif;
       color: #222;
     }
@@ -107,7 +107,7 @@
       max-height: 300px;
       width: auto;
       height: auto;
-      margin-top: 20px;
+      margin: 20px auto 0 auto;
       border-radius: 10px;
     }
 
@@ -194,6 +194,7 @@
         document.querySelector(".code-inputs").style.display = "none";
         document.querySelector(".actions").style.display = "none";
         message.textContent = "";
+        hintText.style.display = "none";
         resultImage.style.display = "block";
         resultText.style.display = "block";
       } else {
